@@ -1,0 +1,14 @@
+version: '2.4'
+services:
+
+ #Portainer - WebUI for Containers
+  portainer:
+    image: portainer/portainer
+    hostname: portainer
+    container_name: Portainer
+    restart: always
+    ports:
+      - "9000:9000"
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+      - /mnt/nfs/docker_config/Portainer/data:/data
