@@ -5,17 +5,17 @@ services:
   portainer:
     image: portainer/portainer
     hostname: portainer
-    container_name: PortainerTeST
+    container_name: Portainer
     restart: always
     ports:
-      - "9001:9000"
+      - "9000:9000"
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock
       - /mnt/nfs/docker_config/Portainer/data:/data
 
 # Organizer - Unified HTPC/Home Server Web Interface
   organizr:
-    container_name: organizr
+    container_name: Organizr
     hostname: organizr
     restart: always
     image: lsiocommunity/organizr
@@ -23,6 +23,80 @@ services:
       - /mnt/nfs/docker_config/Organizer/config:/config
     ports:
       - "8085:80"
+    environment:
+      - PUID=1000
+      - PGID=1000
+      - TZ=America/New_York
+     
+     ######### PERSONAL VIDEO RECORDERS ##########
+
+# Radarr – Movie Download and Management
+  radarr:
+    image: "linuxserver/radarr"
+    hostname: radarr
+    container_name: "Radarr"
+    volumes:
+      - /mnt/nfs/docker_config/Radarr/Downloads:/downloads
+      - /mnt/nfs/nas_video/Movies:/movies
+      - /mnt/nfs/nzb_dir:/nzb_watch
+      - /mnt/nfs/complete:/watch
+      - /mnt/nfs/docker_config/Radarr/Config:/config
+      - "/etc/localtime:/etc/localtime:ro"
+    ports:
+      - "7878:7878"
+    restart: always
+    environment:
+      - PUID=1000
+      - PGID=1000
+      - TZ=America/New_York
+
+# Sonarr – TV Show Download and Management
+  sonarr:
+    image: "linuxserver/sonarr"
+    hostname: sonarr
+    container_name: "Sonarr"
+    volumes:
+      - /mnt/nfs/complete:/watch
+      - /mnt/nfs/docker_config/Sonarr/Config:/config
+      - /mnt/nfs/docker_config/Sonarr/Downloads:/downloads
+      - /mnt/nfs/docker_config/NZBget/Downloads/completed:/nzb_complete
+      - /mnt/nfs/nzb_dir:/nzb_watch
+      - /mnt/nfs/nas_video/TV Shows:/tv
+      - "/etc/localtime:/etc/localtime:ro"
+    ports:
+        - "8989:8989"
+    restart: always
+    environment:
+      - PUID=1000
+      - PGID=1000
+      - TZ=America/New_York
+      
+      # Heimdall – Application Dashboard for all your web applications
+  heimdall:
+    image: "linuxserver/heimdall"
+    hostname: heimdall
+    container_name: "Heimdall"
+    volumes:
+      - /mnt/nfs/docker_config/Heimdall/Config:/config 
+    ports:
+        - "4433:443"
+        - "800:80"
+    restart: always
+    environment:
+      - PUID=1000
+      - PGID=1000
+      - TZ=America/New_York
+      
+      # Ombi – Accept Requests for your Media Server
+  ombi:
+    container_name: Ombi
+    hostname: ombi
+    restart: always
+    image: linuxserver/ombi
+    volumes:
+      - /mnt/nfs/docker_config/Ombi/Config:/config
+    ports:
+      - "3579:3579"
     environment:
       - PUID=1000
       - PGID=1000
