@@ -1,7 +1,7 @@
 version: '2'
 services:
 
- #Portainer - WebUI for Containers
+# Portainer - WebUI for Containers
   portainer:
     image: portainer/portainer
     hostname: portainer
@@ -28,8 +28,6 @@ services:
       - PGID=1000
       - TZ=America/New_York
      
-     ######### PERSONAL VIDEO RECORDERS ##########
-
 # Radarr – Movie Download and Management
   radarr:
     image: "linuxserver/radarr"
@@ -71,7 +69,7 @@ services:
       - PGID=1000
       - TZ=America/New_York
       
-      # Heimdall – Application Dashboard for all your web applications
+ # Heimdall – Application Dashboard for all your web applications
   heimdall:
     image: "linuxserver/heimdall"
     hostname: heimdall
@@ -87,7 +85,7 @@ services:
       - PGID=1000
       - TZ=America/New_York
       
-      # Ombi – Accept Requests for your Media Server
+# Ombi – Accept Requests for your Media Server
   ombi:
     container_name: Ombi
     hostname: ombi
@@ -101,3 +99,37 @@ services:
       - PUID=1000
       - PGID=1000
       - TZ=America/New_York
+      
+# MariaDB – Database Server for your Apps
+  mariadb:
+    image: "linuxserver/mariadb"
+    container_name: "Mariadb"
+    hostname: mariadb
+    volumes:
+        - /mnt/nfs/docker_config/MariaDB/Config:/config
+    ports:
+      - target: 3306
+        published: 3306
+        protocol: tcp
+        mode: host
+    restart: always
+    environment:
+      - MYSQL_ROOT_PASSWORD=Rac3rjoker
+      - PUID=1000
+      - PGID=1000
+      - TZ=America/New_York
+      
+# WebUI for MariaDB
+  phpmyadmin:
+    hostname: phpmyadmin
+    container_name: phpmyadmin
+    image: phpmyadmin/phpmyadmin
+    restart: always
+    links:
+      - mariadb:db
+    ports:
+      - 8081:80
+    environment:
+      - PMA_HOST=mariadb
+      - PMA_PORT=3306
+      - MYSQL_ROOT_PASSWORD=Rac3rjoker
