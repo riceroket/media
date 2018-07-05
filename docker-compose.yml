@@ -108,10 +108,11 @@ services:
     volumes:
         - /mnt/nfs/docker_config/MariaDB/Config:/config
     ports:
-      - target: 3306
-        published: 3306
-        protocol: tcp
-        mode: host
+      - 3306:3306
+#      - target: 3306
+#        published: 3306
+#        protocol: tcp
+#        mode: host
     restart: always
     environment:
       - MYSQL_ROOT_PASSWORD=Rac3rjoker
