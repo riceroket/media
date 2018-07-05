@@ -8,7 +8,7 @@ services:
     container_name: Portainer
     restart: always
     ports:
-      - "9000:9000"
+      - 9000:9000
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock
       - /mnt/nfs/docker_config/Portainer/data:/data
@@ -22,7 +22,7 @@ services:
     volumes:
       - /mnt/nfs/docker_config/Organizer/config:/config
     ports:
-      - "8085:80"
+      - 8085:80
     environment:
       - PUID=1000
       - PGID=1000
@@ -41,7 +41,7 @@ services:
       - /mnt/nfs/docker_config/Radarr/Config:/config
       - "/etc/localtime:/etc/localtime:ro"
     ports:
-      - "7878:7878"
+      - 7878:7878
     restart: always
     environment:
       - PUID=1000
@@ -62,7 +62,7 @@ services:
       - /mnt/nfs/nas_video/TV Shows:/tv
       - "/etc/localtime:/etc/localtime:ro"
     ports:
-        - "8989:8989"
+        - 8989:8989
     restart: always
     environment:
       - PUID=1000
@@ -77,8 +77,8 @@ services:
     volumes:
       - /mnt/nfs/docker_config/Heimdall/Config:/config 
     ports:
-        - "4433:443"
-        - "800:80"
+        - 4433:443
+        - 800:80
     restart: always
     environment:
       - PUID=1000
@@ -94,7 +94,7 @@ services:
     volumes:
       - /mnt/nfs/docker_config/Ombi/Config:/config
     ports:
-      - "3579:3579"
+      - 3579:3579
     environment:
       - PUID=1000
       - PGID=1000
