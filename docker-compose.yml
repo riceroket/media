@@ -179,7 +179,7 @@ services:
       - PGID=1000
       
 # Letsencrypt – Your Own Cloud Storage
-  nextcloud:
+  letsencrypt:
     container_name: letsencrypt
     hostname: letsencrypt
     restart: always
