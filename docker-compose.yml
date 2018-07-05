@@ -133,3 +133,21 @@ services:
       - PMA_HOST=mariadb
       - PMA_PORT=3306
       - MYSQL_ROOT_PASSWORD=Rac3rjoker
+      
+# NZBGet – Usenet (NZB) Downloader
+  nzbget:
+    image: "linuxserver/nzbget"
+    hostname: nzbget
+    container_name: "nzbget"
+    volumes:
+      - /mnt/nfs/docker_config/NZBget/Config:/config
+      - /mnt/nfs/docker_config/NZBget/Downloads:/downloads
+      - /mnt/nfs/nzb_dir:/nzb_watch
+    ports:
+      - 6789:6789
+    restart: always
+    environment:
+      - PUID=1000
+      - PGID=1000
+      - TZ=America/New_York
+      
